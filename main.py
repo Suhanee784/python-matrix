@@ -27,7 +27,3 @@ def read_item(item_id: int, q: str = None):
 @app.post("/items/")
 def create_item(item: Item):
     return {"status": "Item created", "item": item}
-
-
-
-    
