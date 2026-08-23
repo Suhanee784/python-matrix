@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build & push:
+  build_push:
      runs-on: ubuntu-latest
 
      steps:
@@ -15,3 +15,14 @@ jobs:
          with:
            username: ${{vars.Dockerhub_user}}
            password: ${{secrets.docker_Token}}
+      
+       - name: build and push
+         uses: docker/build-push-action@v6
+         with:
+           context: .
+           push: true
+           tags: |
+                 ${{vars.Dockerhub_user}}/github-actions-app:${{github.ref_name}}
+                 ${{vars.Dockerhub_user}}/github-actions-app:latest
+                 ${{vars.Dockerhub_user}}/github-actions-app:${{github.sha}}
+                  
