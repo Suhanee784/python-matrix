@@ -4,6 +4,9 @@ on:
 
 jobs:
   build_push:
+     env:
+       DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+       DOCKER_TAG: ${{ github.sha }}
      runs-on: ubuntu-latest
 
      steps:
@@ -25,4 +28,7 @@ jobs:
                  ${{ vars.DOCKERHUB_USER }}/github-actions-app:${{ github.ref_name }}
                  ${{ vars.DOCKERHUB_USER }}/github-actions-app:latest
                  ${{ vars.DOCKERHUB_USER }}/github-actions-app:${{ github.sha }}
+
+       - name: deploy with docker compose
+         run: docker compose down && docker compose up -d --build --force-recreate
                   
